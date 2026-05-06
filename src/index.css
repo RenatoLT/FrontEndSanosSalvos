@@ -1,0 +1,376 @@
+/* Contenedor general */
+.auth-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #e3f2fd, #ffffff);
+}
+
+/* Card (el "cuadrado") */
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* Títulos */
+.auth-title {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.auth-subtitle {
+  margin-bottom: 20px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+/* Formulario vertical */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Inputs */
+.auth-form input {
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  outline: none;
+  transition: 0.2s;
+}
+
+.auth-form input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 5px rgba(13,110,253,0.3);
+}
+
+/* Botón (colores invertidos) */
+.auth-form button {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  background: #0d6efd;
+  color: white;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.auth-form button:hover {
+  background: #0b5ed7;
+}
+
+/* Link */
+.auth-link {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+/* 📱 Navbar inferior */
+.mobile-navbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background: #212529;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+}
+
+.mobile-navbar a {
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+}
+
+/* Espacio para que no tape contenido */
+body {
+  padding-bottom: 60px;
+}
+
+/* Contenedor general */
+.home-container {
+  padding: 20px;
+}
+
+/* HERO */
+.home-hero {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.home-hero h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.home-hero p {
+  color: #6c757d;
+  margin: 10px 0 20px;
+}
+
+/* Botones */
+.home-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ACCIONES */
+.home-actions {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.action-card {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* HOW */
+.home-how {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.steps {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .home-actions {
+    flex-direction: row;
+  }
+
+  .action-card {
+    flex: 1;
+  }
+
+  .steps {
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+  }
+}
+
+/* Botón principal */
+.home-btn-primary {
+  background: #0d6efd;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  transition: 0.2s;
+}
+
+.home-btn-primary:hover {
+  background: #0b5ed7;
+}
+
+/* Botón secundario (invertido) */
+.home-btn-secondary {
+  background: white;
+  color: #0d6efd;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 500;
+  border: 1px solid #0d6efd;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.home-btn-secondary:hover {
+  background: #f1f5ff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.how-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Header */
+.how-title {
+  padding: 15px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.how-title span {
+  transition: transform 0.3s ease;
+}
+
+.how-content.open ~ .how-title span {
+  transform: rotate(180deg);
+}
+
+/* Contenido oculto */
+.how-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 15px;
+  transition: all 0.3s ease;
+}
+
+/* Contenido visible */
+.how-content.open {
+  max-height: 500px;
+  opacity: 1;
+  padding: 0 15px 15px;
+}
+
+.how-item:hover {
+  transform: translateY(-2px);
+}
+
+.how-content ol {
+  list-style-position: inside;
+  padding-left: 3px;
+}
+
+.how-content li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.home-carousel {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;   
+  margin: 0 auto 20px;
+  height: 60vh;       
+  min-height: 300px;   
+  max-height: 500px;   
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+/* 🔥 Slides base */
+.carousel-slide {
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center 30%;
+  opacity: 0;
+
+  z-index: 0;                 
+  pointer-events: none;       
+
+  transition: opacity 0.6s ease, transform 0.3s ease;
+}
+
+/* 🔥 Slide activo */
+.carousel-slide.active {
+  opacity: 1;
+  z-index: 2;                 
+  pointer-events: auto;       
+}
+
+/* 🔥 Hover SOLO en el activo */
+.carousel-slide.active:hover {
+  transform: scale(1.03);
+}
+
+/* 🎨 Overlay */
+.carousel-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+  color: white;
+}
+
+.carousel-overlay h2 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.carousel-overlay p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* 🔘 Botones */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: white;
+  font-size: 24px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  z-index: 3;
+}
+
+.carousel-btn.prev {
+  left: 10px;
+}
+
+.carousel-btn.next {
+  right: 10px;
+}
+
+/* 🔵 Dots */
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 3;
+}
+
+.carousel-dots span {
+  width: 8px;
+  height: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.carousel-dots span.active {
+  background: white;
+}
