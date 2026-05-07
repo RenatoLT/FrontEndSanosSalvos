@@ -1,0 +1,154 @@
+/* 📱 MOBILE NAVBAR */
+
+.mobile-topbar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 60px;
+
+  background: rgba(255,255,255,0.96);
+
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1000;
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.mobile-logo {
+  text-decoration: none;
+
+  color: #222;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  transition: all 0.2s ease;
+}
+
+.mobile-logo:hover {
+  transform: scale(1.02);
+}
+
+.mobile-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 70px;
+
+  background: white;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.08);
+
+  z-index: 1000;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-decoration: none;
+  color: #555;
+
+  font-size: 14px;
+}
+
+.mobile-nav-item span {
+  font-size: 22px;
+}
+
+/* 🔥 BOTÓN CENTRAL */
+
+.mobile-report-btn {
+  position: absolute;
+
+  top: -25px;
+
+  width: 65px;
+  height: 65px;
+
+  border-radius: 50%;
+
+  background: #0d6efd;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 38px;
+  text-decoration: none;
+
+  box-shadow: 0 10px 20px rgba(13, 110, 253, 0.4);
+
+  transition: transform 0.2s ease;
+}
+
+.mobile-report-btn:hover {
+  transform: scale(1.08);
+  color: white;
+}
+
+/* 💻 DESKTOP NAVBAR */
+
+.desktop-navbar {
+  width: 100%;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.desktop-navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  padding: 15px 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.desktop-logo a {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.desktop-logo a:hover {
+  cursor: pointer;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.desktop-links {
+  display: flex;
+  gap: 20px;
+}
+
+.desktop-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.desktop-links a:hover {
+  color: #0d6efd;
+}

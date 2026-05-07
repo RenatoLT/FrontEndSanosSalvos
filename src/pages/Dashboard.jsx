@@ -1,10 +1,6 @@
-import Navbar from "../components/MainNavbar";
-
 function Dashboard() {
   return (
     <>
-      <Navbar />
-
       <div className="container mt-4">
         <h2>🐾 Mascotas perdidas</h2>
 

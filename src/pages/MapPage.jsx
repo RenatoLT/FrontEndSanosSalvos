@@ -1,11 +1,36 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 
 mapboxgl.accessToken = "pk.eyJ1IjoicmVuYXRvbHQiLCJhIjoiY21uZDVnczZzMWNycDJwcTZvN2UzMGNqOCJ9.EnqohwHfWdTwNWOWwDawwQ";
 
 function MapPage() {
+  const [loadingLocation, setLoadingLocation] = useState(false);
   const mapContainer = useRef(null);
   const map = useRef(null);
+
+  const handleLocate = () => {
+
+    setLoadingLocation(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+
+        const lng = position.coords.longitude;
+        const lat = position.coords.latitude;
+
+        map.current.flyTo({
+          center: [lng, lat],
+          zoom: 14
+        });
+
+        setLoadingLocation(false);
+      },
+      (error) => {
+        console.error(error);
+        setLoadingLocation(false);
+      }
+    );
+  };
 
   useEffect(() => {
     if (map.current) return;
@@ -17,50 +42,67 @@ function MapPage() {
       zoom: 12
     });
 
-    // 📍 Botón de geolocalización (PRO)
     const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
         enableHighAccuracy: true
       },
-      trackUserLocation: true,
-      showUserHeading: true
+      trackUserLocation: false,
+      showUserHeading: false
     });
 
     map.current.addControl(geolocate);
 
-    // 📍 Obtener ubicación automáticamente
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lng = position.coords.longitude;
-          const lat = position.coords.latitude;
+    map.current.on("load", () => {
 
-          // 🎯 Centrar mapa
-          map.current.flyTo({
-            center: [lng, lat],
-            zoom: 14
-          });
+      handleLocate();
 
-                // 🔵 Marker usuario (opcional, porque el control ya lo hace)
-            //new mapboxgl.Marker({ color: "blue" })
-            //.setLngLat([lng, lat])
-            //.setPopup(new mapboxgl.Popup().setText("Estás aquí"))
-            //.addTo(map.current);
-        },
-        (error) => {
-          console.error("Error obteniendo ubicación:", error);
-          alert("No se pudo obtener tu ubicación");
-        }
-      );
-    }
+      // 🔥 activa el botón oficial
+      geolocate.trigger();
+
+      // 🔥 centra el mapa correctamente
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+
+            const lng = position.coords.longitude;
+            const lat = position.coords.latitude;
+
+            map.current.flyTo({
+              center: [lng, lat],
+              zoom: 14
+            });
+
+          },
+          (error) => {
+            console.error("Error obteniendo ubicación:", error);
+          }
+        );
+      }
+
+    });
 
   }, []);
 
   return (
-    <div style={{ position: "relative", height: "100vh" }}>
+    <div className="map-page">
+
+      <div className="map-search-bar">
+        <input
+          type="text"
+          placeholder="Buscar ubicación..."
+        />
+      </div>
+
+      <div
+        className={`location-button ${loadingLocation ? "loading" : ""}`}
+        onClick={handleLocate}
+      >
+        📍
+      </div>
+      
       <div
         ref={mapContainer}
-        style={{ width: "100%", height: "100%" }}
+        className="map-container"
       />
     </div>
   );

@@ -1,4 +1,3 @@
-// components/MainNavbar.jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -15,28 +14,60 @@ function MainNavbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // 📱 MOBILE NAVBAR
   if (isMobile) {
-    // 📱 NAVBAR MOBILE
     return (
-      <div className="mobile-navbar">
-        <Link to="/">🏠</Link>
-        <Link to="/map">🗺️</Link>
-        <Link to="/dashboard">📋</Link>
-      </div>
+      <>
+
+        {/* 🔝 TOP LOGO */}
+        <div className="mobile-topbar">
+          <Link to="/" className="mobile-logo">
+            🐾 Sanos y Salvos
+          </Link>
+        </div>
+
+        {/* 📱 BOTTOM NAVBAR */}
+        <div className="mobile-navbar">
+
+          {/* IZQUIERDA */}
+          <Link to="/map" className="mobile-nav-item">
+            <span>🗺️</span>
+            <small>Mapa</small>
+          </Link>
+
+          {/* BOTÓN CENTRAL */}
+          <Link to="/report" className="mobile-report-btn">
+            +
+          </Link>
+
+          {/* DERECHA */}
+          <Link to="/login" className="mobile-nav-item">
+            <span>👤</span>
+            <small>Cuenta</small>
+          </Link>
+
+        </div>
+
+      </>
     );
   }
 
-  // 💻 NAVBAR DESKTOP
+  // 💻 DESKTOP NAVBAR
   return (
-    <nav className="navbar navbar-dark bg-dark">
-      <div className="container">
-        <span className="navbar-brand">🐾 PetFinder</span>
+    <nav className="desktop-navbar">
+      <div className="desktop-navbar-container">
 
-        <div>
-          <Link className="btn btn-outline-light me-2" to="/">Inicio</Link>
-          <Link className="btn btn-outline-light me-2" to="/map">Mapa</Link>
-          <Link className="btn btn-outline-light" to="/dashboard">Dashboard</Link>
+        <div className="desktop-logo">
+          <Link to="/">🐾 Sanos y Salvos</Link>
         </div>
+
+        <div className="desktop-links">
+          <Link to="/">Inicio</Link>
+          <Link to="/map">Mapa</Link>
+          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/login">Cuenta</Link>
+        </div>
+
       </div>
     </nav>
   );
