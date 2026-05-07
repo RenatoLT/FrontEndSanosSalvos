@@ -40,7 +40,7 @@ function Home() {
       )
     },
     {
-      title: "PREGUNTA FRECUENTE 3️⃣",
+      title: "PREGUNTA FRECUENTE 3",
       content:
         "LOREM IPSUM."
     }
@@ -49,7 +49,6 @@ function Home() {
   return (
     <div className="home-container">
 
-      {/* 🧠 HERO */}
       <section className="home-hero">
         <h1>Encuentra mascotas perdidas 🐾</h1>
         <p>
@@ -67,7 +66,6 @@ function Home() {
         </div>
       </section>
 
-      {/* 🎯 ACCIONES */}
       <section className="home-actions">
         <div className="action-card">
           <h5>🔍 Buscar</h5>

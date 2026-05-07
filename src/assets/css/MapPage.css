@@ -7,7 +7,6 @@
   overflow: hidden;
 }
 
-/* 📱 MOBILE */
 @media (max-width: 767px) {
   .map-page {
     top: 60px;
@@ -15,7 +14,6 @@
   }
 }
 
-/* 💻 DESKTOP */
 @media (min-width: 768px) {
   .map-page {
     top: 70px;
@@ -23,7 +21,6 @@
   }
 }
 
-/* 🗺️ MAPA */
 .map-container {
   width: 100%;
   height: 100%;
@@ -43,7 +40,7 @@
 
 .map-search-bar input {
   width: 100%;
-  height: 50px; /* 🔥 altura fija */
+  height: 50px;
 
   padding: 0 18px;
 
@@ -101,13 +98,9 @@
   transform: scale(1.05);
 }
 
-/* 🔥 LOADING */
-
 .location-button.loading {
   animation: pulseLocation 1s infinite;
 }
-
-/* ✨ ANIMACIÓN */
 
 @keyframes pulseLocation {
   0% {

@@ -14,7 +14,7 @@ function Carousel() {
 			link: "/dashboard"
 		},
 		{
-			image: "https://images.unsplash.com/photo-1601758123927-196f1f4d6e8f",
+			image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b",
 			title: "Reporta fácilmente 📍",
 			text: "Publica mascotas",
 			link: "/map"

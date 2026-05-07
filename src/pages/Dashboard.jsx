@@ -5,7 +5,6 @@ function Dashboard() {
         <h2>🐾 Mascotas perdidas</h2>
 
         <div className="row">
-          {/* Ejemplo de card */}
           <div className="col-md-4">
             <div className="card mt-3">
               <img

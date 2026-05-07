@@ -18,15 +18,15 @@ function MainNavbar() {
   if (isMobile) {
     return (
       <>
-
-        {/* 🔝 TOP LOGO */}
         <div className="mobile-topbar">
-          <Link to="/" className="mobile-logo">
-            🐾 Sanos y Salvos
-          </Link>
+          <div className="mobile-topbar-content">
+            <Link to="/" className="mobile-logo">
+              🐾 Sanos y Salvos
+            </Link>
+          </div>
         </div>
 
-        {/* 📱 BOTTOM NAVBAR */}
+        {/* BOTTOM NAVBAR */}
         <div className="mobile-navbar">
 
           {/* IZQUIERDA */}
@@ -52,7 +52,7 @@ function MainNavbar() {
     );
   }
 
-  // 💻 DESKTOP NAVBAR
+  // DESKTOP NAVBAR
   return (
     <nav className="desktop-navbar">
       <div className="desktop-navbar-container">

@@ -56,10 +56,8 @@ function MapPage() {
 
       handleLocate();
 
-      // 🔥 activa el botón oficial
       geolocate.trigger();
 
-      // 🔥 centra el mapa correctamente
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
