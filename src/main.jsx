@@ -7,6 +7,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "./assets/css/carousel.css";
 import "./assets/css/navbar.css";
 import "./assets/css/MapPage.css";
+import "./assets/css/ReportPage.css";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>

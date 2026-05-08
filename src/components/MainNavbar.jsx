@@ -36,7 +36,7 @@ function MainNavbar() {
           </Link>
 
           {/* BOTÓN CENTRAL */}
-          <Link to="/report" className="mobile-report-btn">
+          <Link to="/ReportPage" className="mobile-report-btn">
             +
           </Link>
 

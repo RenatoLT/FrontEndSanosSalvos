@@ -1,0 +1,125 @@
+.report-page {
+  padding: 20px;
+  padding-top: 80px;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* TABS */
+.report-tabs {
+  display: flex;
+	width: 100%;
+	max-width: 768px;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.report-tabs button {
+  flex: 1;
+  padding: 12px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #f1f1f1;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.report-tabs button.active {
+  background: #0d6efd;
+  color: white;
+}
+
+/* FORM */
+.report-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+	width: 100%;
+  max-width: 768px;
+  align-items: stretch;
+}
+
+.report-form > * {
+  width: 100%;
+}
+
+.report-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-color: #f8f8f8;
+
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+
+  padding-right: 40px;
+	transition: all 0.2s ease;
+}
+
+.report-form select:hover {
+  background-color: #f1f1f1;
+	cursor: pointer;
+}
+
+.report-form select:focus {
+  outline: none;
+  border: 1px solid #0d6efd;
+  box-shadow: 0 0 0 2px rgba(13,110,253,0.15);
+}
+
+/* INPUTS */
+.report-form input,
+.report-form select {
+
+	width: 100%;
+
+  padding: 14px;
+
+  border-radius: 12px;
+  border: none;
+
+  background: #f8f8f8;
+
+  font-size: 14px;
+
+	box-sizing: border-box; /* 🔥 CLAVE */
+}
+
+/* MAPA */
+.report-map {
+  height: 250px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* BOTÓN */
+.report-submit {
+  margin-top: 10px;
+
+  padding: 14px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #0d6efd;
+  color: white;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.report-submit:hover {
+  transform: scale(1.02);
+}

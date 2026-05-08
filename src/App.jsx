@@ -7,6 +7,7 @@ import MainNavbar from "./components/MainNavbar";
 import { lazy, Suspense } from "react";
 
 const MapPage = lazy(() => import("./pages/MapPage"));
+const ReportPage = lazy(() => import("./pages/ReportPage"));
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/map" element={<MapPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/ReportPage" element={<ReportPage />} />
         </Routes>
       </Suspense>
     </>
