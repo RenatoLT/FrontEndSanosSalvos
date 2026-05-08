@@ -1,0 +1,166 @@
+/* LAYOUT GENERAL */
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f6f8fb;
+}
+
+/* SIDEBAR */
+.sidebar {
+	border-radius: 12px;
+  width: 240px;
+  background: white;
+  color: #0d6efd;
+
+	margin: 20px;
+  padding: 25px 15px;
+
+	box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.sidebar button {
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+
+  color: #0d6efd;
+
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.sidebar button:hover {
+  background: rgba(13, 110, 253, 0.1);
+  color: #0d6efd;
+}
+
+.sidebar button.active {
+  background: #0d6efd;
+  color: white;
+  font-weight: bold;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* 🔥 CENTRADO REAL */
+}
+
+/* CONTENIDO */
+.container {
+  width: 100%;
+  max-width: 768px; /* 🔥 LÍMITE */
+  padding: 30px 20px;
+}
+
+/* TITULO */
+.container h1 {
+  margin-bottom: 15px;
+}
+
+/* BUSCADOR */
+.search {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: #f1f5f9;
+  margin-bottom: 20px;
+}
+
+/* LISTA */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* CARD */
+.card {
+  display: flex;
+  gap: 15px;
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* IMAGEN */
+.card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+
+/* INFO */
+.card div {
+  padding: 15px;
+}
+
+/* USER CARD */
+.card.user {
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 70px;
+
+    left: 10px;
+    right: 10px;
+
+    width: auto; /* 🔥 clave */
+    height: 60px;
+
+    border-radius: 20px;
+
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.9);
+
+    z-index: 999;
+  }
+
+  .main {
+    width: 100%;
+    margin-top: 140px;
+    padding: 0 10px;
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
