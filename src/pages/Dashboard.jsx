@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import "../assets/css/dashboard.css";
+import { reportService } from "../api/reportService";
+import { mapReport } from "../mappers/reportMapper";
+import { userService } from "../api/userService";
 
 function Dashboard() {
   const [tab, setTab] = useState("lost");
@@ -9,43 +12,38 @@ function Dashboard() {
   const [seenReports, setSeenReports] = useState([]);
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    // 🔌 listo para backend después
-    setLostReports([
-      {
-        id: 1,
-        name: "Firulais",
-        type: "Perro",
-        location: "Santiago",
-        status: "activo",
-        image: "https://images.unsplash.com/photo-1558788353-f76d92427f16"
-      }
-    ]);
-
-    setSeenReports([
-      {
-        id: 2,
-        type: "Perro",
-        color: "Negro",
-        location: "Maipú",
-        image: "https://images.unsplash.com/photo-1568572933382-74d440642117"
-      }
-    ]);
-
-    setUsers([
-      {
-        id: 1,
-        name: "Juan Pérez",
-        email: "juan@test.com"
-      }
-    ]);
-  }, []);
-
   const filterData = (data) =>
     data.filter((item) =>
       JSON.stringify(item).toLowerCase().includes(filter.toLowerCase())
     );
+  
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const reports = await reportService.getAll();
 
+        const lost = reports
+          .filter(r => r.tipo === "PERDIDO")
+          .map(mapReport);
+
+        const seen = reports
+          .filter(r => r.tipo === "AVISTADA")
+          .map(mapReport);
+
+        setLostReports(lost);
+        setSeenReports(seen);
+
+        const usersData = await userService.getAll();
+        setUsers(usersData || []);
+
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    loadData();
+  }, []);
+  
   return (
     <div className="dashboard">
 
@@ -91,12 +89,15 @@ function Dashboard() {
               filterData(lostReports).map((item) => (
                 <div key={item.id} className="card">
 
-                  <img src={item.image} alt="" />
+                  <img src="https://via.placeholder.com/120" alt="mascota" />
 
                   <div>
-                    <h3>{item.name}</h3>
-                    <p>{item.type}</p>
-                    <span>{item.location}</span>
+                    <h3>{item.mascota}</h3>
+                    <p>{item.descripcion}</p>
+                    <span>{item.ubicacion}</span>
+                    <p>Tipo: {item.tipo}</p>
+                    <p>Raza: {item.raza}</p>
+                    <p>Contacto: {item.contacto}</p>
                   </div>
 
                 </div>
@@ -107,12 +108,15 @@ function Dashboard() {
               filterData(seenReports).map((item) => (
                 <div key={item.id} className="card">
 
-                  <img src={item.image} alt="" />
+                  <img src="https://via.placeholder.com/120" alt="mascota" />
 
                   <div>
-                    <h3>{item.type}</h3>
-                    <p>{item.color}</p>
-                    <span>{item.location}</span>
+                    <h3>{item.mascota}</h3>
+                    <p>{item.descripcion}</p>
+                    <span>{item.ubicacion}</span>
+                    <p>Tipo: {item.tipo}</p>
+                    <p>Raza: {item.raza}</p>
+                    <p>Contacto: {item.contacto}</p>
                   </div>
 
                 </div>
@@ -120,15 +124,14 @@ function Dashboard() {
 
             {/* USERS */}
             {tab === "users" &&
-              filterData(users).map((user) => (
-                <div key={user.id} className="card user">
+              filterData(users).map((u) => (
+                <div key={u.idUsuario} className="card user">
                   <div>
-                    <h3>{user.name}</h3>
-                    <p>{user.email}</p>
+                    <h3>{u.nombre}</h3>
+                    <p>{u.email}</p>
                   </div>
                 </div>
               ))}
-
           </div>
         </div>
       </main>

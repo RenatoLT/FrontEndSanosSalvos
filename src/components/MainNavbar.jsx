@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function MainNavbar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const { user } = useAuth();
+  const isAdmin = user?.rol === "ADMIN";
 
   useEffect(() => {
     const handleResize = () => {
@@ -14,6 +17,7 @@ function MainNavbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
   // 📱 MOBILE NAVBAR
   if (isMobile) {
     return (
@@ -23,6 +27,12 @@ function MainNavbar() {
             <Link to="/" className="mobile-logo">
               🐾 Sanos y Salvos
             </Link>
+
+            {isAdmin && (
+              <Link to="/dashboard" className="mobile-admin-link">
+                ⚙️
+              </Link>
+            )}
           </div>
         </div>
 
@@ -41,7 +51,7 @@ function MainNavbar() {
           </Link>
 
           {/* DERECHA */}
-          <Link to="/login" className="mobile-nav-item">
+          <Link to={user ? "/account" : "/login"} className="mobile-nav-item">
             <span>👤</span>
             <small>Cuenta</small>
           </Link>
@@ -64,8 +74,8 @@ function MainNavbar() {
         <div className="desktop-links">
           <Link to="/">Inicio</Link>
           <Link to="/map">Mapa</Link>
-          <Link to="/dashboard">Dashboard</Link>
-          <Link to="/login">Cuenta</Link>
+          {isAdmin && <Link to="/dashboard">Dashboard</Link>}
+          <Link to={user ? "/account" : "/login"}>Cuenta</Link>
         </div>
 
       </div>

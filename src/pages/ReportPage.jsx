@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
+import { api } from "../api/api";
 
 mapboxgl.accessToken = "pk.eyJ1IjoicmVuYXRvbHQiLCJhIjoiY21uZDVnczZzMWNycDJwcTZvN2UzMGNqOCJ9.EnqohwHfWdTwNWOWwDawwQ";
 
@@ -13,6 +14,26 @@ function ReportPage() {
 	const [hasCollar, setHasCollar] = useState(null);
 	const [collarColor, setCollarColor] = useState("");
 	const [hasChip, setHasChip] = useState(null);
+  const [especie, setEspecie] = useState("");
+  const [raza, setRaza] = useState("");
+  const [sexo, setSexo] = useState("");
+  const [tamano, setTamano] = useState("");
+  const [color, setColor] = useState("");
+  const [nombreMascota, setNombreMascota] = useState("");
+  const [chipValue, setChipValue] = useState("");
+  const [error, setError] = useState("");
+  const [description, setDescription] = useState("");
+
+  const mapTamano = {
+    "Pequeño": "PEQUEÑO",
+    "Mediano": "MEDIANO",
+    "Grande": "GRANDE"
+  };
+
+  const mapTipo = {
+    "lost": "PERDIDO",
+    "seen": "AVISTADA"
+  };
 
 	const geocodeAddress = async (query) => {
 		if (!map.current || !marker.current) return;
@@ -36,6 +57,85 @@ function ReportPage() {
 			setAddress(data.features[0].place_name);
 		}
 	};
+
+  const handleSubmit = async () => {
+    setError("");
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user?.idUsuario) {
+      return setError("Usuario no autenticado");
+    }
+
+    if (!address) {
+      return setError("Debes ingresar una dirección");
+    }
+
+    if (!especie) {
+      return setError("Debes seleccionar una especie");
+    }
+
+    if (!color) {
+      return setError("Debes ingresar el color de la mascota");
+    }
+
+    if (type === "lost") {
+      if (!nombreMascota) {
+        return setError("Debes ingresar el nombre de la mascota");
+      }
+
+      if (!tamano) {
+        return setError("Debes seleccionar el tamaño");
+      }
+
+      if (!sexo) {
+        return setError("Debes seleccionar el género");
+      }
+    }
+
+    if (hasChip === "yes" && !chipValue.trim()) {
+      return setError("Debes ingresar el número de chip");
+    }
+
+    try {
+      const lngLat = marker.current.getLngLat();
+
+      const data = {
+        usuarioId: user.idUsuario,
+        mascotaId: null,
+
+        tipo: mapTipo[type],
+        descripcion: description,
+
+        latitud: lngLat.lat,
+        longitud: lngLat.lng,
+
+        especie: especie.toUpperCase(),
+        tamano: mapTamano[tamano],
+        color,
+
+        nombreMascota: type === "lost" ? nombreMascota : null,
+        raza,
+        sexo: sexo ? sexo.toUpperCase() : null,
+        chipMascota: hasChip === "yes" ? chipValue : ""
+      };
+
+      const res = await api.post("/reportes/integral", data);
+
+      console.log("Reporte creado:", res);
+
+      setError(""); // limpiar error si todo sale bien
+
+    } catch (err) {
+      console.error(err);
+
+      if (err.message?.includes("chip")) {
+        setError("Ya existe una mascota con ese chip");
+      } else {
+        setError("Error al publicar el reporte");
+      }
+    }
+  };
 
 	useEffect(() => {
 		if (!isUserTyping) return;
@@ -109,25 +209,48 @@ function ReportPage() {
         {/* SOLO PERDIDA */}
         {type === "lost" && (
           <>
-            <input placeholder="Nombre de la mascota" />
+            <input
+              placeholder="Nombre de la mascota"
+              value={nombreMascota}
+              onChange={(e) => setNombreMascota(e.target.value)}
+            />
 
-						<select>
+						<select
+							value={especie}
+							onChange={(e) => setEspecie(e.target.value)}
+						>
               <option>Especie</option>
               <option>Perro</option>
               <option>Gato</option>
               <option>Otro</option>
             </select>
 
-            <input placeholder="Raza" />
+            <input
+              placeholder="Color de la mascota"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+            />
 
-            <select>
+            <input
+              placeholder="Raza"
+              value={raza}
+              onChange={(e) => setRaza(e.target.value)}
+            />
+
+            <select
+              value={tamano}
+              onChange={(e) => setTamano(e.target.value)}
+            >
               <option>Tamaño</option>
               <option>Pequeño</option>
               <option>Mediano</option>
               <option>Grande</option>
             </select>
 
-            <select>
+            <select
+              value={sexo}
+              onChange={(e) => setSexo(e.target.value)}
+            >
               <option>Género</option>
               <option>Macho</option>
               <option>Hembra</option>
@@ -141,24 +264,40 @@ function ReportPage() {
 							<option value="yes">Sí</option>
 							<option value="no">No</option>
 						</select>
-
+            
+            {hasChip === "yes" && (
+              <input
+                placeholder="Número de chip"
+                value={chipValue}
+                onChange={(e) => setChipValue(e.target.value)}
+              />
+            )}
           </>
         )}
 
         {/* AVISTADA */}
         {type === "seen" && (
           <>
-						<select>
+						<select
+							value={especie}
+							onChange={(e) => setEspecie(e.target.value)}
+						>
               <option>Especie</option>
               <option>Perro</option>
               <option>Gato</option>
               <option>Otro</option>
             </select>
 
-            <input placeholder="Color de la mascota" />
+            <input
+              placeholder="Color de la mascota"
+              value={color}
+              onChange={(e) => setColor(e.target.value)}
+            />
 
-						 <select>
-              <option>Género</option>
+						 <select
+							value={sexo}
+							onChange={(e) => setSexo(e.target.value)}
+						>
               <option>Macho</option>
               <option>Hembra</option>
             </select>
@@ -167,24 +306,13 @@ function ReportPage() {
 
         {/* COMÚN */}
 
-				<select
-					value={hasCollar ?? ""}
-					onChange={(e) => setHasCollar(e.target.value)}
-				>
-					<option value="">¿Tiene collar?</option>
-					<option value="yes">Sí</option>
-					<option value="no">No</option>
-				</select>
-
-				{/* 🎨 COLOR COLLAR */}
-				{hasCollar === "yes" && (
-					<input
-						placeholder="Color del collar"
-						value={collarColor}
-						onChange={(e) => setCollarColor(e.target.value)}
-					/>
-				)}
         <input type="file" multiple />
+
+        <input
+					placeholder="Descripción"
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+				/>
 
         <input
 					placeholder="Dirección (calle + número)"
@@ -198,9 +326,11 @@ function ReportPage() {
         {/* MAPA */}
         <div ref={mapContainer} className="report-map" />
 
-        <button className="report-submit">
+        <button className="report-submit" onClick={handleSubmit}>
           Publicar reporte
         </button>
+
+        {error && <p className="form-error">{error}</p>}
 
       </div>
     </div>

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { use, useState } from "react";
 import Carousel from "../components/Carousel";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
   const [open, setOpen] = useState(null);
+  const {user} = useAuth();
 
   const toggle = (index) => {
     setOpen(open === index ? null : index);
@@ -60,9 +62,15 @@ function Home() {
             Ver mapa
           </Link>
 
-          <Link to="/register" className="btn home-btn-secondary">
-            Crear cuenta
-          </Link>
+          {user ? (
+            <Link to="/ReportPage" className="btn home-btn-secondary">
+              Crear reporte
+            </Link>
+          ) : (
+            <Link to="/register" className="btn home-btn-secondary">
+              Crear cuenta
+            </Link>
+          )}
         </div>
       </section>
 
@@ -93,7 +101,7 @@ function Home() {
 
         <div className="how-dropdown">
           {items.map((item, index) => (
-            <div className="how-item">
+            <div key={index} className="how-item">
               <div
                 className="how-title"
                 onClick={() => toggle(index)}

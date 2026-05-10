@@ -1,0 +1,76 @@
+.account-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  margin-top: 30px;
+}
+
+.account-card {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+/* HEADER */
+.account-header {
+  margin-bottom: 20px;
+}
+
+.account-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #1890ff;
+  color: white;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+}
+
+.account-role {
+  font-size: 12px;
+  color: #888;
+}
+
+/* INFO */
+.account-info {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.account-row {
+  margin-bottom: 12px;
+}
+
+.account-row span {
+  font-size: 12px;
+  color: #999;
+}
+
+.account-row p {
+  margin: 2px 0 0;
+  font-weight: 500;
+}
+
+/* BOTÓN */
+.logout-btn {
+  margin-top: 25px;
+  width: 100%;
+  padding: 10px;
+  background: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background: #0b5ed7;
+}

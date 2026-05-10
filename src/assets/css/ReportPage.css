@@ -123,3 +123,14 @@
 .report-submit:hover {
   transform: scale(1.02);
 }
+
+.form-error {
+  margin-top: 12px;
+  color: #ff4d4f;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #ffe5e5
+}

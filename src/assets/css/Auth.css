@@ -1,0 +1,68 @@
+.auth-form select {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 8px 0;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+  cursor: pointer;
+
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-form select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* contenedor de fecha */
+.auth-form .date-selects {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-form .date-selects select {
+  flex: 1;
+}
+
+.form-message {
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.form-message.error {
+  background-color: #ffe5e5;
+  color: #d8000c;
+  border: 1px solid #ffb3b3;
+}
+
+.form-message.success {
+  background-color: #e6ffed;
+  color: #1a7f37;
+  border: 1px solid #b7f5c8;
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.submit-button:disabled:hover {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
