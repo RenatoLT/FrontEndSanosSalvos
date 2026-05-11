@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../assets/css/dashboard.css";
+import ConfirmModal from "../components/ConfimModal";
 import { reportService } from "../api/reportService";
 import { mapReport } from "../mappers/reportMapper";
 import { userService } from "../api/userService";
@@ -11,6 +12,66 @@ function Dashboard() {
   const [lostReports, setLostReports] = useState([]);
   const [seenReports, setSeenReports] = useState([]);
   const [users, setUsers] = useState([]);
+  const [modal, setModal] = useState({open: false,type: null,id: null});
+  
+  const confirmAction = async () => {
+    try {
+      if (modal.type === "deleteReporte") {
+        await reportService.delete(modal.id);
+
+        setLostReports(prev => prev.filter(r => r.id !== modal.id));
+        setSeenReports(prev => prev.filter(r => r.id !== modal.id));
+      }
+
+      if (modal.type === "deleteUser") {
+        await userService.delete(modal.id);
+        setUsers(prev => prev.filter(u => u.idUsuario !== modal.id));
+      }
+
+      if (modal.type === "makeAdmin") {
+        await userService.updateUser(modal.id, { rol: "ADMIN" });
+
+        setUsers(prev =>
+          prev.map(u =>
+            u.idUsuario === modal.id ? { ...u, rol: "ADMIN" } : u
+          )
+        );
+      }
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setModal({ open: false, type: null, id: null });
+    }
+  };
+
+  const closeModal = () => {
+    setModal({ open: false, type: null, id: null });
+  };
+
+  const handleDeleteReporte = (id) => {
+    setModal({
+      open: true,
+      type: "deleteReporte",
+      id
+    });
+  };
+
+  const handleDeleteUser = (id) => {
+    setModal({
+      open: true,
+      type: "deleteUser",
+      id
+    });
+  };
+
+  const handleMakeAdmin = (id) => {
+    setModal({
+      open: true,
+      type: "makeAdmin",
+      id
+    });
+  };
 
   const filterData = (data) =>
     data.filter((item) =>
@@ -97,9 +158,17 @@ function Dashboard() {
                     <span>{item.ubicacion}</span>
                     <p>Tipo: {item.tipo}</p>
                     <p>Raza: {item.raza}</p>
-                    <p>Contacto: {item.contacto}</p>
                   </div>
+                  <div className="card-actions">
 
+                    <button
+                      className="btn danger"
+                      onClick={() => handleDeleteReporte(item.id)}
+                    >
+                      Eliminar
+                    </button>
+
+                  </div>
                 </div>
               ))}
 
@@ -116,9 +185,17 @@ function Dashboard() {
                     <span>{item.ubicacion}</span>
                     <p>Tipo: {item.tipo}</p>
                     <p>Raza: {item.raza}</p>
-                    <p>Contacto: {item.contacto}</p>
                   </div>
+                  <div className="card-actions">
 
+                    <button
+                      className="btn danger"
+                      onClick={() => handleDeleteReporte(item.id)}
+                    >
+                      Eliminar
+                    </button>
+
+                  </div>
                 </div>
               ))}
 
@@ -126,15 +203,51 @@ function Dashboard() {
             {tab === "users" &&
               filterData(users).map((u) => (
                 <div key={u.idUsuario} className="card user">
+
                   <div>
                     <h3>{u.nombre}</h3>
                     <p>{u.email}</p>
                   </div>
+
+                  <div className="card-actions">
+
+                    <button
+                      className="btn danger"
+                      onClick={() => handleDeleteUser(u.idUsuario)}
+                    >
+                      Eliminar
+                    </button>
+                    <button
+                      className="btn primary"
+                      onClick={() => handleMakeAdmin(u.idUsuario)}
+                    >
+                      Hacer Admin
+                    </button>
+
+                  </div>
+
                 </div>
               ))}
           </div>
         </div>
       </main>
+      <ConfirmModal
+        open={modal.open}
+        title={
+          modal.type === "deleteReporte" ? "Eliminar reporte" :
+          modal.type === "deleteUser" ? "Eliminar usuario" :
+          modal.type === "makeAdmin" ? "Hacer administrador" :
+          ""
+        }
+        message={
+          modal.type === "deleteReporte" ? "¿Seguro que quieres eliminar este reporte?" :
+          modal.type === "deleteUser" ? "¿Seguro que quieres eliminar este usuario?" :
+          modal.type === "makeAdmin" ? "¿Quieres darle permisos de administrador?" :
+          ""
+        }
+        onConfirm={confirmAction}
+        onCancel={closeModal}
+      />
     </div>
   );
 }

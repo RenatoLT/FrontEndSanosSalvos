@@ -1,10 +1,12 @@
 const API_URL = "http://localhost:8090/api/bff";
 
 async function request(endpoint, options = {}) {
+  const isFormData = options.body instanceof FormData;
+
   const res = await fetch(`${API_URL}${endpoint}`, {
     credentials: "include",
     headers: {
-      "Content-Type": "application/json",
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...options.headers
     },
     ...options
@@ -16,25 +18,32 @@ async function request(endpoint, options = {}) {
     try {
       const data = await res.json();
       message = data.message || message;
-    } catch {
-    }
+    } catch {}
+
     throw new Error(message);
   }
+
+  if (res.status === 204) {
+    return null;
+  }
+
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 
   return res.json();
 }
 
 export const api = {
   get: (url) => request(url),
-  post: (url, data) =>
+  post: (url, data, isFormData = false) =>
     request(url, {
       method: "POST",
-      body: JSON.stringify(data)
+      body: isFormData ? data : JSON.stringify(data)
     }),
-  put: (url, data) =>
+  put: (url, data, isFormData = false) =>
     request(url, {
       method: "PUT",
-      body: JSON.stringify(data)
+      body: isFormData ? data : JSON.stringify(data)
     }),
   delete: (url) =>
     request(url, {

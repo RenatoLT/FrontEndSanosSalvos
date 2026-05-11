@@ -23,6 +23,8 @@ function ReportPage() {
   const [chipValue, setChipValue] = useState("");
   const [error, setError] = useState("");
   const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null);
+
 
   const mapTamano = {
     "Pequeño": "PEQUEÑO",
@@ -120,7 +122,15 @@ function ReportPage() {
         chipMascota: hasChip === "yes" ? chipValue : ""
       };
 
-      const res = await api.post("/reportes/integral", data);
+      const formData = new FormData();
+
+      // JSON como string (IMPORTANTE)
+      formData.append("datos", JSON.stringify(data));
+
+      // archivo
+      formData.append("foto", file);
+
+      const res = await api.post("/reportes/integral", formData, true);
 
       console.log("Reporte creado:", res);
 
@@ -306,7 +316,10 @@ function ReportPage() {
 
         {/* COMÚN */}
 
-        <input type="file" multiple />
+        <input 
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
 
         <input
 					placeholder="Descripción"

@@ -1,0 +1,73 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+}
+
+.modal {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  width: 320px;
+  text-align: center;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: fadeIn 0.2s ease;
+}
+
+.modal h3 {
+  margin-bottom: 10px;
+}
+
+.modal p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Botones reutilizables */
+.btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn.danger {
+  background: #ff4d4f;
+  color: white;
+}
+
+.btn.primary {
+  background: #4f7cff;
+  color: white;
+}
+
+.btn.secondary {
+  background: #eee;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from { transform: scale(0.9); opacity: 0 }
+  to { transform: scale(1); opacity: 1 }
+}

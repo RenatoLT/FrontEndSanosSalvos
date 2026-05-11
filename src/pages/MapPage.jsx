@@ -12,6 +12,20 @@ function MapPage() {
   const [search, setSearch] = useState("");
   const markersRef = useRef([]);
 
+  const formatFecha = (fecha) => {
+    if (!fecha) return "No especificado";
+
+    const date = new Date(fecha);
+
+    return date.toLocaleString("es-CL", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  };
+
   const handleLocate = () => {
 
     setLoadingLocation(true);
@@ -63,7 +77,8 @@ function MapPage() {
     const loadReports = async () => {
       try {
         const data = await reportService.getAll();
-        setReports(data);
+        const activos = data.filter(r => r.estado === "ACTIVO");
+        setReports(activos);
       } catch (err) {
         console.error(err);
       }
@@ -138,7 +153,7 @@ function MapPage() {
             <img src="${r.imagenUrl || 'https://via.placeholder.com/60'}" />
           </div>
         `;
-
+      const fechaFormato = formatFecha(r.fecha);
       const marker = new mapboxgl.Marker(el)
         .setLngLat([r.longitud, r.latitud])
         .setPopup(
@@ -147,10 +162,9 @@ function MapPage() {
               <img src="${r.imagenUrl || 'https://via.placeholder.com/200'}" />
               <h3>${r.nombreMascota || "Sin nombre"}</h3>
               <p><strong>Tipo:</strong> ${r.tipo}</p>
-              <p><strong>Raza:</strong> ${r.raza || "No especificada"}</p>
-              <p><strong>Tamaño:</strong> ${r.tamano || "No especificado"}</p>
-              <p><strong>Color:</strong> ${r.color || "No especificado"}</p>
-              <p>${r.descripcion || ""}</p>
+              <p><strong>Raza:</strong> ${r.razaMascota || "No especificada"}</p>
+              <p><strong>Fecha:</strong> ${fechaFormato || "No especificado"}</p>
+              <p><strong>Detalles:</strong> ${r.descripcion || ""}</p>
             </div>
           `)
         )

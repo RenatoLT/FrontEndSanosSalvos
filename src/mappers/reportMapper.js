@@ -3,7 +3,8 @@ export const mapReport = (r) => ({
   tipo: r.tipo,
   estado: r.estado,
   descripcion: r.descripcion,
-  ubicacion: `${r.latitud}, ${r.longitud}`,
+  latitud: r.latitud,
+  longitud: r.longitud,
   mascota: r.nombreMascota || "Sin nombre",
   raza: r.razaMascota || "Desconocida",
   contacto: r.nombreContacto || "Anónimo"

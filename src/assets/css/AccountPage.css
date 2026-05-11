@@ -1,13 +1,16 @@
 .account-container {
   display: flex;
+  gap: 30px;
   justify-content: center;
+  align-items: flex-start;
   padding: 40px 20px;
   margin-top: 30px;
 }
 
 .account-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
+  flex-shrink: 0;
   background: white;
   border-radius: 16px;
   padding: 25px;
@@ -58,7 +61,6 @@
   font-weight: 500;
 }
 
-/* BOTÓN */
 .logout-btn {
   margin-top: 25px;
   width: 100%;
@@ -73,4 +75,99 @@
 
 .logout-btn:hover {
   background: #0b5ed7;
+}
+
+.reports-section {
+  flex: 1;
+  max-width: 600px;
+}
+
+.reports-section h3 {
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.reports-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.report-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #d3dff8;
+  border-radius: 12px;
+  padding: 16px;
+  color: black;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
+}
+
+.report-card:hover {
+  transform: translateY(-3px);
+}
+
+.report-info h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.report-info p {
+  margin: 5px 0;
+}
+
+.report-info span {
+  font-size: 12px;
+  color: #333;
+}
+
+.report-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.status-select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  background: #0d6efd;
+  color: white;
+  cursor: pointer;
+}
+
+.btn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn.danger {
+  background: #ff4d4f;
+  color: white;
+}
+
+.btn.danger:hover {
+  background: #d9363e;
+}
+
+.empty {
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .account-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .reports-section {
+    width: 100%;
+    max-width: 100%;
+  }
 }
