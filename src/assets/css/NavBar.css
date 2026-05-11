@@ -23,6 +23,10 @@
 .mobile-topbar-content {
   width: 100%;
   max-width: 1200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .mobile-logo {
@@ -156,4 +160,5 @@
   font-size: 20px;
   margin-left: auto;
   text-decoration: none;
+  color:#000000
 }

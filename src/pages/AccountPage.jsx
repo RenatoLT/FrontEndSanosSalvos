@@ -47,7 +47,7 @@ function AccountPage() {
 
         const propios = data
           .map(mapReport)
-          .filter(r => r.contacto === user.nombre);
+          .filter(r => r.usuarioid === user.id && r.tipo === "PERDIDO");
 
         setReportes(propios);
       } catch (err) {

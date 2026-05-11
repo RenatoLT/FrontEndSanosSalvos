@@ -40,11 +40,6 @@ function Home() {
           <p>es mas util en zonas con mas usuarios activos, como ciudades grandes</p>
         </>
       )
-    },
-    {
-      title: "PREGUNTA FRECUENTE 3",
-      content:
-        "LOREM IPSUM."
     }
   ];
 

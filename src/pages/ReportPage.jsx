@@ -37,28 +37,58 @@ function ReportPage() {
     "seen": "AVISTADA"
   };
 
-	const geocodeAddress = async (query) => {
-		if (!map.current || !marker.current) return;
+	useEffect(() => {
+    if (map.current) return;
 
-		const res = await fetch(
-			`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}&country=cl`
-		);
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [-70.6693, -33.4489], // fallback
+      zoom: 13
+    });
 
-		const data = await res.json();
+    marker.current = new mapboxgl.Marker({
+      draggable: true
+    })
+      .setLngLat([-70.6693, -33.4489])
+      .addTo(map.current);
 
-		if (data.features?.length > 0) {
-			const [lng, lat] = data.features[0].center;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lng = position.coords.longitude;
+          const lat = position.coords.latitude;
 
-			map.current.flyTo({
-				center: [lng, lat],
-				zoom: 15
-			});
+          // Mover mapa
+          map.current.flyTo({
+            center: [lng, lat],
+            zoom: 15
+          });
 
-			marker.current.setLngLat([lng, lat]);
+          // Mover marcador
+          marker.current.setLngLat([lng, lat]);
+        },
+        (error) => {
+          console.error("Error obteniendo ubicación:", error);
+        }
+      );
+    }
 
-			setAddress(data.features[0].place_name);
-		}
-	};
+    marker.current.on("dragend", async () => {
+      const lngLat = marker.current.getLngLat();
+
+      const res = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng},${lngLat.lat}.json?access_token=${mapboxgl.accessToken}`
+      );
+
+      const data = await res.json();
+
+      if (data.features && data.features.length > 0) {
+        setAddress(data.features[0].place_name);
+      }
+    });
+
+  }, []);
 
   const handleSubmit = async () => {
     setError("");
@@ -113,12 +143,15 @@ function ReportPage() {
         longitud: lngLat.lng,
 
         especie: especie.toUpperCase(),
-        tamano: mapTamano[tamano],
         color,
 
-        nombreMascota: type === "lost" ? nombreMascota : null,
-        raza,
-        sexo: sexo ? sexo.toUpperCase() : null,
+        nombreMascota: type === "lost" ? nombreMascota : "SIN_NOMBRE",
+
+        tamano: type === "lost"
+          ? mapTamano[tamano]
+          : "MEDIANO",
+
+        raza: raza || "",
         chipMascota: hasChip === "yes" ? chipValue : ""
       };
 
@@ -304,12 +337,10 @@ function ReportPage() {
               onChange={(e) => setColor(e.target.value)}
             />
 
-						 <select
-							value={sexo}
-							onChange={(e) => setSexo(e.target.value)}
-						>
-              <option>Macho</option>
-              <option>Hembra</option>
+            <select value={sexo} onChange={(e) => setSexo(e.target.value)}>
+              <option value="">Género</option>
+              <option value="MACHO">Macho</option>
+              <option value="HEMBRA">Hembra</option>
             </select>
           </>
         )}

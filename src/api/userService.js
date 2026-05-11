@@ -5,8 +5,8 @@ export const userService = {
         api.get("/usuarios"),
     getById: (id) =>
     api.get(`/usuarios/${id}`),
-    updateUser: (id, data) =>
-        api.put(`/usuarios/perfil/${id}`, data),
+    admin: (id) =>
+        api.put(`/usuarios/${id}/rol-admin`),
     delete: (id) =>
         api.delete(`/usuarios/${id}`)
 };

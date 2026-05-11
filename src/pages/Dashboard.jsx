@@ -29,7 +29,7 @@ function Dashboard() {
       }
 
       if (modal.type === "makeAdmin") {
-        await userService.updateUser(modal.id, { rol: "ADMIN" });
+        await userService.admin(modal.id);
 
         setUsers(prev =>
           prev.map(u =>
