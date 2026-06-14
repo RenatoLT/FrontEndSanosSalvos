@@ -10,6 +10,7 @@ import { lazy, Suspense } from "react";
 
 const MapPage = lazy(() => import("./pages/MapPage"));
 const ReportPage = lazy(() => import("./pages/ReportPage"));
+const MatchesRewardsPage = lazy(() => import("./pages/MatchesRewardsPage"));
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>}/>
           <Route path="/ReportPage" element={<ReportPage />} />
           <Route path="/account" element={<AccountPage />} />
+          <Route path="/coincidencias-recompensas" element={<MatchesRewardsPage />} />
         </Routes>
       </Suspense>
     </>

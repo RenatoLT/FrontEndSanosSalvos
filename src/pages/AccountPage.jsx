@@ -58,8 +58,10 @@ function AccountPage() {
     if (user) loadReportes();
   }, [user]);
 
-  const reportesActivos = reportes.filter(
-    r => r.estado === "ACTIVO"
+  const [activeTab, setActiveTab] = useState("ACTIVO");
+
+  const reportesFiltrados = reportes.filter(
+    r => r.estado === activeTab
   );
 
   const handleEstadoChange = async (reporte, nuevoEstado) => {
@@ -154,12 +156,37 @@ function AccountPage() {
         <div className="reports-section">
           <h3>Mis reportes</h3>
 
-          {reportesActivos.length === 0 && (
-            <p className="empty">No tienes reportes activos</p>
+          <div className="reports-tabs">
+            <button
+              className={`tab-btn ${activeTab === "ACTIVO" ? "active" : ""}`}
+              onClick={() => setActiveTab("ACTIVO")}
+            >
+              Activos
+            </button>
+            <button
+              className={`tab-btn ${activeTab === "RESUELTO" ? "active" : ""}`}
+              onClick={() => setActiveTab("RESUELTO")}
+            >
+              Encontrados
+            </button>
+            <button
+              className={`tab-btn ${activeTab === "CANCELADO" ? "active" : ""}`}
+              onClick={() => setActiveTab("CANCELADO")}
+            >
+              Cerrados
+            </button>
+          </div>
+
+          {reportesFiltrados.length === 0 && (
+            <p className="empty">
+              {activeTab === "ACTIVO" && "No tienes reportes activos"}
+              {activeTab === "RESUELTO" && "No tienes reportes de mascotas encontradas"}
+              {activeTab === "CANCELADO" && "No tienes reportes cerrados"}
+            </p>
           )}
 
           <div className="reports-list">
-            {reportesActivos.map((r) => (
+            {reportesFiltrados.map((r) => (
               <div key={r.id} className="report-card">
 
                 <div className="report-info">
@@ -173,7 +200,8 @@ function AccountPage() {
                   <select
                     className="status-select"
                     value={r.estado}
-                      onChange={(e) =>
+                    disabled={r.estado !== "ACTIVO"}
+                    onChange={(e) =>
                       handleEstadoChange(r, e.target.value)
                     }
                   >
@@ -181,15 +209,6 @@ function AccountPage() {
                     <option value="RESUELTO">Encontrado</option>
                     <option value="CANCELADO">Cerrado</option>
                   </select>
-
-                  <button
-                    className="btn danger"
-                    onClick={() => {
-                      setModal({ open: true, type: "delete", id: r.id });
-                    }}
-                  >
-                    Eliminar
-                  </button>
 
                 </div>
 

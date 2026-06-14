@@ -1,0 +1,350 @@
+/* HOME CONTAINER */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 40px 20px;
+  background: #f8fafc;
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* HERO SECTION */
+.home-hero {
+  text-align: center;
+  max-width: 800px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.home-hero h1 {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #0f172a;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.home-hero p {
+  font-size: 18px;
+  color: #64748b;
+  max-width: 580px;
+  line-height: 1.6;
+  margin: 0 0 12px 0;
+}
+
+.home-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.home-btn-primary {
+  background: #0d6efd;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 25px rgba(13, 110, 253, 0.2);
+}
+
+.home-btn-primary:hover {
+  background: #0b5ed7;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(13, 110, 253, 0.3);
+}
+
+.home-btn-secondary {
+  background: white;
+  color: #0d6efd;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.home-btn-secondary:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* MISSION SECTION */
+.home-mission {
+  max-width: 900px;
+  width: 100%;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
+  border-radius: 24px;
+  padding: 36px;
+  text-align: center;
+  margin-bottom: 50px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.05);
+}
+
+.home-mission h3 {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.home-mission p {
+  font-size: 16px;
+  color: #1e40af;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ACTIONS SECTION */
+.home-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 60px;
+}
+
+.action-card {
+  background: white;
+  padding: 28px 24px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.03);
+  border: 1px solid #f1f5f9;
+  text-align: left;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+  border-color: #e2e8f0;
+}
+
+.action-card-icon {
+  background: #f1f5f9;
+  color: #0d6efd;
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.action-card h5 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.action-card p {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* CAROUSEL */
+.home-carousel {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 60px;
+}
+
+/* FAQ SECTION */
+.home-how {
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 40px;
+}
+
+.home-how h4 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.how-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.how-item {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.how-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
+}
+
+.how-title {
+  padding: 18px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.how-title:hover {
+  color: #0d6efd;
+}
+
+.how-title span {
+  font-size: 20px;
+  color: #64748b;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.how-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.how-content.open {
+  max-height: 800px;
+  opacity: 1;
+  padding: 0 24px 24px 24px;
+}
+
+.how-content h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #334155;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.how-content p, 
+.how-content b {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.how-content ol {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.how-content li {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 992px) {
+  .home-actions {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    padding: 30px 16px;
+    padding-top: 80px; /* Space for mobile header */
+  }
+
+  .home-hero {
+    margin-top: 20px;
+    margin-bottom: 36px;
+  }
+
+  .home-hero h1 {
+    font-size: 32px;
+  }
+
+  .home-hero p {
+    font-size: 15px;
+  }
+
+  .home-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .home-buttons a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .home-mission {
+    padding: 24px;
+    margin-bottom: 36px;
+    border-radius: 20px;
+  }
+
+  .home-mission h3 {
+    font-size: 20px;
+  }
+
+  .home-mission p {
+    font-size: 14px;
+  }
+
+  .home-actions {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .action-card {
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .home-carousel {
+    margin-bottom: 40px;
+  }
+
+  .home-how h4 {
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+}

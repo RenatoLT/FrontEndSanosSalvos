@@ -4,6 +4,7 @@ import ConfirmModal from "../components/ConfimModal";
 import { reportService } from "../api/reportService";
 import { mapReport } from "../mappers/reportMapper";
 import { userService } from "../api/userService";
+import { LuShieldAlert, LuEye, LuUsers, LuTrash2, LuUserCheck, LuSearch } from "react-icons/lu";
 
 function Dashboard() {
   const [tab, setTab] = useState("lost");
@@ -112,16 +113,19 @@ function Dashboard() {
       <aside className="sidebar">
         <h2>Dashboard</h2>
 
-        <button onClick={() => setTab("lost")} className={tab==="lost" ? "active":""}>
-          Perdidos
+        <button onClick={() => setTab("lost")} className={tab === "lost" ? "active" : ""}>
+          <LuShieldAlert size={18} style={{ marginRight: "8px", verticalAlign: "middle" }} />
+          <span>Perdidos</span>
         </button>
 
-        <button onClick={() => setTab("seen")} className={tab==="seen" ? "active":""}>
-          Avistados
+        <button onClick={() => setTab("seen")} className={tab === "seen" ? "active" : ""}>
+          <LuEye size={18} style={{ marginRight: "8px", verticalAlign: "middle" }} />
+          <span>Avistados</span>
         </button>
 
-        <button onClick={() => setTab("users")} className={tab==="users" ? "active":""}>
-          Usuarios
+        <button onClick={() => setTab("users")} className={tab === "users" ? "active" : ""}>
+          <LuUsers size={18} style={{ marginRight: "8px", verticalAlign: "middle" }} />
+          <span>Usuarios</span>
         </button>
       </aside>
 
@@ -136,12 +140,15 @@ function Dashboard() {
             {tab === "users" && "Usuarios"}
           </h1>
 
-          <input
-            className="search"
-            placeholder="Buscar..."
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          />
+          <div className="search-container">
+            <LuSearch className="search-icon" />
+            <input
+              className="search"
+              placeholder="Buscar por nombre, descripción o raza..."
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+            />
+          </div>
 
           <div className="list">
 
@@ -150,24 +157,27 @@ function Dashboard() {
               filterData(lostReports).map((item) => (
                 <div key={item.id} className="card">
 
-                  <img src="https://via.placeholder.com/120" alt="mascota" />
+                  <img src={(item.urlsFotos && item.urlsFotos.length > 0) ? item.urlsFotos[0] : "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=200"} alt="mascota" />
 
-                  <div>
-                    <h3>{item.mascota}</h3>
-                    <p>{item.descripcion}</p>
-                    <span>{item.ubicacion}</span>
-                    <p>Tipo: {item.tipo}</p>
-                    <p>Raza: {item.raza}</p>
+                  <div className="card-info">
+                    <div className="card-header-row">
+                      <h3>{item.mascota}</h3>
+                      <span className="badge badge-perdido">Perdido</span>
+                    </div>
+                    <p className="card-desc">{item.descripcion}</p>
+                    <div className="card-meta">
+                      <span><strong>Ubicación:</strong> {item.ubicacion || "No especificada"}</span>
+                      <span><strong>Raza:</strong> {item.raza}</span>
+                    </div>
                   </div>
                   <div className="card-actions">
-
                     <button
                       className="btn danger"
                       onClick={() => handleDeleteReporte(item.id)}
                     >
+                      <LuTrash2 size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
                       Eliminar
                     </button>
-
                   </div>
                 </div>
               ))}
@@ -177,24 +187,27 @@ function Dashboard() {
               filterData(seenReports).map((item) => (
                 <div key={item.id} className="card">
 
-                  <img src="https://via.placeholder.com/120" alt="mascota" />
+                  <img src={(item.urlsFotos && item.urlsFotos.length > 0) ? item.urlsFotos[0] : "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=200"} alt="mascota" />
 
-                  <div>
-                    <h3>{item.mascota}</h3>
-                    <p>{item.descripcion}</p>
-                    <span>{item.ubicacion}</span>
-                    <p>Tipo: {item.tipo}</p>
-                    <p>Raza: {item.raza}</p>
+                  <div className="card-info">
+                    <div className="card-header-row">
+                      <h3>{item.mascota}</h3>
+                      <span className="badge badge-avistado">Avistado</span>
+                    </div>
+                    <p className="card-desc">{item.descripcion}</p>
+                    <div className="card-meta">
+                      <span><strong>Ubicación:</strong> {item.ubicacion || "No especificada"}</span>
+                      <span><strong>Raza:</strong> {item.raza}</span>
+                    </div>
                   </div>
                   <div className="card-actions">
-
                     <button
                       className="btn danger"
                       onClick={() => handleDeleteReporte(item.id)}
                     >
+                      <LuTrash2 size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
                       Eliminar
                     </button>
-
                   </div>
                 </div>
               ))}
@@ -204,26 +217,33 @@ function Dashboard() {
               filterData(users).map((u) => (
                 <div key={u.idUsuario} className="card user">
 
-                  <div>
-                    <h3>{u.nombre}</h3>
-                    <p>{u.email}</p>
+                  <div className="card-info">
+                    <div className="card-header-row">
+                      <h3>{u.nombre}</h3>
+                      <span className={`badge ${u.rol === "ADMIN" ? "badge-admin" : "badge-user"}`}>
+                        {u.rol}
+                      </span>
+                    </div>
+                    <p className="card-desc">{u.email}</p>
                   </div>
 
                   <div className="card-actions">
-
+                    {u.rol !== "ADMIN" && (
+                      <button
+                        className="btn primary"
+                        onClick={() => handleMakeAdmin(u.idUsuario)}
+                      >
+                        <LuUserCheck size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
+                        Hacer Admin
+                      </button>
+                    )}
                     <button
                       className="btn danger"
                       onClick={() => handleDeleteUser(u.idUsuario)}
                     >
+                      <LuTrash2 size={16} style={{ marginRight: "6px", verticalAlign: "middle" }} />
                       Eliminar
                     </button>
-                    <button
-                      className="btn primary"
-                      onClick={() => handleMakeAdmin(u.idUsuario)}
-                    >
-                      Hacer Admin
-                    </button>
-
                   </div>
 
                 </div>

@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import gsap from "gsap";
+import { LuMap, LuUser, LuLayoutDashboard, LuAward, LuPlus } from "react-icons/lu";
 
 function MainNavbar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { user } = useAuth();
   const isAdmin = user?.rol === "ADMIN";
+  const plusIconRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -16,6 +19,16 @@ function MainNavbar() {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const handleReportClick = () => {
+    if (plusIconRef.current) {
+      gsap.to(plusIconRef.current, {
+        rotation: "+=180",
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    }
+  };
 
 
   // 📱 MOBILE NAVBAR
@@ -28,46 +41,17 @@ function MainNavbar() {
               🐾 Sanos y Salvos
             </Link>
 
-            {isAdmin && (
-              <Link to="/dashboard" className="mobile-admin-link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 
-                  2 0 1 1-2.83 2.83l-.06-.06A1.65 
-                  1.65 0 0 0 15 19.4a1.65 1.65 0 
-                  0 0-1 .6 1.65 1.65 0 0 0-.33 
-                  1.82v.06a2 2 0 1 1-4 0v-.06a1.65 
-                  1.65 0 0 0-.33-1.82 1.65 1.65 0 
-                  0 0-1-.6 1.65 1.65 0 0 0-1.82.33l-.06.06a2 
-                  2 0 1 1-2.83-2.83l.06-.06A1.65 
-                  1.65 0 0 0 4.6 15a1.65 1.65 0 
-                  0 0-.6-1 1.65 1.65 0 0 
-                  0-1.82-.33h-.06a2 2 0 1 
-                  1 0-4h.06a1.65 1.65 0 0 
-                  0 1.82-.33H4.6A1.65 1.65 
-                  0 0 0 5 9a1.65 1.65 0 0 
-                  0-.6-1.82l-.06-.06a2 2 
-                  0 1 1 2.83-2.83l.06.06A1.65 
-                  1.65 0 0 0 9 4.6c.26 0 
-                  .51-.1.71-.29A1.65 1.65 
-                  0 0 0 10 2.82V2.76a2 2 
-                  0 1 1 4 0v.06c0 .65.39 
-                  1.23 1 1.5.2.19.45.29.71.29.65 
-                  0 1.23-.39 1.5-1l.06-.06a2 2 
-                  0 1 1 2.83 2.83l-.06.06c-.61.27-1 
-                  .85-1 1.5 0 .26.1.51.29.71.19.2.29.45.29.71 
-                  0 .65-.39 1.23-1 1.5z" />
-                </svg>
+            <div className="mobile-topbar-actions">
+              <Link to="/coincidencias-recompensas" className="mobile-topbar-btn-match" title="Coincidencias y Premios">
+                <LuAward size={22} />
               </Link>
-            )}
+
+              {isAdmin && (
+                <Link to="/dashboard" className="mobile-admin-link" title="Dashboard">
+                  <LuLayoutDashboard size={22} />
+                </Link>
+              )}
+            </div>
           </div>
         </div>
 
@@ -76,18 +60,24 @@ function MainNavbar() {
 
           {/* IZQUIERDA */}
           <Link to="/map" className="mobile-nav-item">
-            <span>🗺️</span>
+            <LuMap size={24} />
             <small>Mapa</small>
           </Link>
 
           {/* BOTÓN CENTRAL */}
-          <Link to="/ReportPage" className="mobile-report-btn">
-            +
+          <Link
+            to="/ReportPage"
+            className="mobile-report-btn"
+            onClick={handleReportClick}
+          >
+            <span ref={plusIconRef} style={{ display: "inline-block" }}>
+              <LuPlus size={28} />
+            </span>
           </Link>
 
           {/* DERECHA */}
           <Link to={user ? "/account" : "/login"} className="mobile-nav-item">
-            <span>👤</span>
+            <LuUser size={24} />
             <small>Cuenta</small>
           </Link>
 
@@ -109,6 +99,7 @@ function MainNavbar() {
         <div className="desktop-links">
           <Link to="/">Inicio</Link>
           <Link to="/map">Mapa</Link>
+          <Link to="/coincidencias-recompensas">Coincidencias y Premios</Link>
           {isAdmin && <Link to="/dashboard">Dashboard</Link>}
           <Link to={user ? "/account" : "/login"}>Cuenta</Link>
         </div>

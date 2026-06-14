@@ -7,5 +7,6 @@ export const mapReport = (r) => ({
   longitud: r.longitud,
   mascota: r.nombreMascota || "Sin nombre",
   raza: r.razaMascota || "Desconocida",
-  contacto: r.nombreContacto || "Anónimo"
+  contacto: r.nombreContacto || "Anónimo",
+  urlsFotos: r.urlsFotos || []
 });

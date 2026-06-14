@@ -42,8 +42,8 @@ function Register() {
     let dvEsperado = 11 - (suma % 11);
     dvEsperado =
       dvEsperado === 11 ? "0" :
-      dvEsperado === 10 ? "K" :
-      dvEsperado.toString();
+        dvEsperado === 10 ? "K" :
+          dvEsperado.toString();
 
     return dv === dvEsperado;
   };
@@ -113,16 +113,17 @@ function Register() {
       email: form.email,
       telefono: Number(form.telefono),
       password: form.password,
-      fechaNacimiento
+      fechaNacimiento,
+      rol: "USUARIO"
     };
 
     try {
       await authService.register(payload);
       setSuccess("Cuenta creada correctamente");
       setError("");
-        setTimeout(() => {
-      navigate("/login");
-    }, 1200);
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
     } catch (err) {
       setError(err.message || "Error al crear cuenta");
       setSuccess("");
