@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import { api } from "../api/api";
+import { mapboxService } from "../api/mapboxService";
 
 mapboxgl.accessToken = "pk.eyJ1IjoicmVuYXRvbHQiLCJhIjoiY21uZDVnczZzMWNycDJwcTZvN2UzMGNqOCJ9.EnqohwHfWdTwNWOWwDawwQ";
 
@@ -100,15 +101,9 @@ function ReportPage() {
 
     marker.current.on("dragend", async () => {
       const lngLat = marker.current.getLngLat();
-
-      const res = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng},${lngLat.lat}.json?access_token=${mapboxgl.accessToken}`
-      );
-
-      const data = await res.json();
-
-      if (data.features && data.features.length > 0) {
-        setAddress(data.features[0].place_name);
+      const placeName = await mapboxService.getAddressFromCoords(lngLat.lng, lngLat.lat, mapboxgl.accessToken);
+      if (placeName) {
+        setAddress(placeName);
       }
     });
 
@@ -216,15 +211,8 @@ function ReportPage() {
     }
 
     const timeout = setTimeout(async () => {
-      try {
-        const res = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(address)}.json?access_token=${mapboxgl.accessToken}&country=cl&autocomplete=true&limit=5`
-        );
-        const data = await res.json();
-        setSuggestions(data.features || []);
-      } catch (err) {
-        console.error("Error fetching address suggestions:", err);
-      }
+      const features = await mapboxService.getSuggestions(address, mapboxgl.accessToken);
+      setSuggestions(features);
     }, 400);
 
     return () => clearTimeout(timeout);

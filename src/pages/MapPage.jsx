@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import { reportService } from "../api/reportService";
 import { api } from "../api/api";
+import { formatChip } from "../utils/chip";
+import { mapboxService } from "../api/mapboxService";
 
 mapboxgl.accessToken = "pk.eyJ1IjoicmVuYXRvbHQiLCJhIjoiY21uZDVnczZzMWNycDJwcTZvN2UzMGNqOCJ9.EnqohwHfWdTwNWOWwDawwQ";
 
@@ -76,15 +78,8 @@ function MapPage() {
     }
 
     const delayDebounce = setTimeout(async () => {
-      try {
-        const res = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(search)}.json?access_token=${mapboxgl.accessToken}&country=cl&autocomplete=true&limit=5`
-        );
-        const data = await res.json();
-        setSuggestions(data.features || []);
-      } catch (err) {
-        console.error("Error fetching map suggestions:", err);
-      }
+      const features = await mapboxService.getSuggestions(search, mapboxgl.accessToken);
+      setSuggestions(features);
     }, 400);
 
     return () => clearTimeout(delayDebounce);
@@ -480,13 +475,7 @@ function MapPage() {
               <div className="detail-item">
                 <strong>Chip:</strong>
                 <span>
-                  {(() => {
-                    const chipCode = petDetails?.chip || petDetails?.chipMascota || selectedReport.chipMascota;
-                    if (!chipCode || chipCode.toUpperCase().startsWith("SR-")) {
-                      return "Sin registro";
-                    }
-                    return `Sí (${chipCode})`;
-                  })()}
+                  {formatChip(petDetails?.chip || petDetails?.chipMascota || selectedReport.chipMascota)}
                 </span>
               </div>
               <div className="detail-item">

@@ -1,6 +1,6 @@
 import { api } from "./api";
 
-const cleanUrl = (url) => {
+export const cleanUrl = (url) => {
   if (!url) return url;
   const prefix = "http://localhost:8090/api/bff/reportes/fotos/";
   if (url.startsWith(prefix)) {
@@ -9,7 +9,7 @@ const cleanUrl = (url) => {
   return url;
 };
 
-const cleanReport = (r) => {
+export const cleanReport = (r) => {
   if (r) {
     if (r.urlsFotos) {
       r.urlsFotos = r.urlsFotos.map(cleanUrl);
