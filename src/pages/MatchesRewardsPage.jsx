@@ -143,7 +143,7 @@ function MatchesRewardsPage() {
             : metaSim;
 
           // Mostrar si la similitud supera el 75%
-          if (finalScore >= 0.30) {
+          if (finalScore >= 0.75) {
             computedMatches.push({
               lost,
               seen,
