@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import mapboxgl from "mapbox-gl";
 import { api } from "../api/api";
 
 mapboxgl.accessToken = "pk.eyJ1IjoicmVuYXRvbHQiLCJhIjoiY21uZDVnczZzMWNycDJwcTZvN2UzMGNqOCJ9.EnqohwHfWdTwNWOWwDawwQ";
 
 function ReportPage() {
+  const navigate = useNavigate();
   const [type, setType] = useState("lost");
   const [address, setAddress] = useState("");
   const [isUserTyping, setIsUserTyping] = useState(false);
@@ -194,6 +196,7 @@ function ReportPage() {
       console.log("Reporte creado:", res);
 
       setError(""); // limpiar error si todo sale bien
+      navigate("/map");
 
     } catch (err) {
       console.error(err);
